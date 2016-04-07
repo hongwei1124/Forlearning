@@ -1,0 +1,24 @@
+Gathering all the trick questions that I collect for myself
+
+---------------
+
+Java private static class:
+A non-static nested class (sometimes incorrectly referred to as an 'inner class') 
+has full access to the members of the class within which it is nested. 
+A static nested class does not have a reference to a nesting instance, 
+so a static nested class cannot invoke non-static methods or access non-static fields of an instance of 
+the class within which it is nested.
+
+Look at the LinkedPositionalList.java for ideas of inner class.
+
+----------------
+
+Write Good SQL, database performance:
+
+----------------
+
+JVM heap:
+
+----------------
+
+Design Pattern:
