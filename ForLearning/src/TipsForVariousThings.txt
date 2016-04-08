@@ -11,14 +11,72 @@ the class within which it is nested.
 
 Look at the LinkedPositionalList.java for ideas of inner class.
 
+Look to see iterable and iterator inner class
+
 ----------------
 
 Write Good SQL, database performance:
+1. Do use temp tables to improve cursor performance
+2. Don’t nest views
+3. Do use table-valued functions
+4. Do use partitioning to avoid large data moves
+5. If you must use ORMs, use stored procedures
+6. Don’t do large ops on many tables in the same batch
+7. Don't use triggers
+8. Don’t cluster on GUID
+9. Don’t count all rows if you only need to see if data exists
+10. Don’t do negative searches
+
+
 
 ----------------
 
 JVM heap:
+JVM option 	Meaning
+-Xms 	initial java heap size
+-Xmx 	maximum java heap size
+-Xmn 	the size of the heap for the young generation
+
+It is good practice for big production projects to set the minimum -Xms and maximum -Xmx heap sizes to the same value.
+
+For efficient garbage collection, the -Xmn value should be lower than the -Xmx value. Heap size does not determine
+ the amount of memory your process uses.
+ 
+ Stack Size:
+
+Each thread in the VM get’s a stack. The stack size will limit the number of threads that you can have, 
+too big of a stack size and you will run out of memory as each thread is allocated more memory than it needs.
+JVM option 	Meaning
+-Xss 	the stack size for each thread
+
+-Xss determines the size of the stack: –Xss1024k. If the stack space is too small, eventually you will see an 
+exception class java.lang.StackOverflowError.
+
+Garbage Collection:
+
+There are essentially two GC threads running. One is a very lightweight thread which does “little” collections primarily on 
+the Young generation of the heap. The other is the Full GC thread which traverses the entire heap when there is not enough 
+memory left to allocate space for objects which get promoted from the Young to the older generation(s).
+
+If there is a memory leak or inadequate heap allocated, eventually the older generation will start to run out of room 
+causing the Full GC thread to run (nearly) continuously. Since this process “stops the world”, Java application won’t be 
+able to respond to requests and they’ll start to back up or OOM.
+
+The amount allocated for the Young(Eden) generation is the value specified with -Xmn. The amount allocated for the older 
+generation is the value of -Xmx minus the -Xmn. Generally, you don’t want the Eden to be too big or it will take too long 
+for the GC to look through it for space that can be reclaimed.
 
 ----------------
 
 Design Pattern:
+
+----------------
+
+Java multi thread:
+
+
+----------------
+
+Java:
+
+ArrayList add(j, element) will push the following elements further.
